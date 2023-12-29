@@ -434,8 +434,8 @@ public class Demo {
 
 		println("//start to keygen");
 		test.keygen(pubfile, prvfile, mskfile, attr_str);
-		String[] attr = LangPolicy.parseAttribute(attr_str);
-		prv2 = Bswabe.keygen2(pub2, msk2, attr);
+		String[] attr1 = LangPolicy.parseAttribute(attr_str);
+		prv2 = Bswabe.keygen2(pub2, msk2, attr1);
 		tpd = Bswabe.gentpd(prv2,pub2,w);
 		println("//end to keygen");
 

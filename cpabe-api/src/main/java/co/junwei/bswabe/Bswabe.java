@@ -413,6 +413,11 @@ public class Bswabe {
 
 		return keyCph;
 	}
+	public static void BuildIndex()
+	{
+
+	}
+
 	public static BswabeCphKey enc2(BswabePub pub, String policy,String word)
 			throws Exception {
 		BswabeCphKey keyCph = new BswabeCphKey();
