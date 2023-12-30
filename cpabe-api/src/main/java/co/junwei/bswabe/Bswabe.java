@@ -6,7 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Arrays;
 import javax.crypto.KeyGenerator;
 
 import it.unisa.dia.gas.jpbc.CurveParameters;
@@ -413,12 +415,13 @@ public class Bswabe {
 
 		return keyCph;
 	}
-	public static void BuildIndex()
-	{
+	// public static void BuildIndex(String word,String[] Files)
+	// {
 
-	}
 
-	public static BswabeCphKey enc2(BswabePub pub, String policy,String word)
+	// }
+
+	public static BswabeCphKey enc2(BswabePub pub, String policy,String word,KeywordLinkedListBuilder builder,HashMap<String, List<String>> documentSet)
 			throws Exception {
 		BswabeCphKey keyCph = new BswabeCphKey();
 		BswabeCph cph = new BswabeCph();
@@ -454,6 +457,9 @@ public class Bswabe {
 //		System.out.println(lol.toString());
 		keyCph.cph = cph;
 		keyCph.key = m;
+		byte[] newArray = Arrays.copyOfRange(cph.cs.toBytes(), 0, 16);
+		System.out.println(newArray.length);
+		builder.buildLinkedList(word, documentSet.get(word),newArray);	
 		System.out.println(cph.cs.toString());
 
 		return keyCph;

@@ -3,6 +3,7 @@ co\junwei\digitalsignature\SignatureObject.class
 co\junwei\bswabe\BswabePolicy.class
 co\junwei\cpabe\policy\LangPolicy.class
 co\junwei\bswabe\BswabePrvComp.class
+co\junwei\bswabe\Node.class
 co\junwei\index\Index.class
 co\junwei\bswabe\BswabeMsk.class
 co\junwei\cpabe\AESCoder.class
@@ -13,12 +14,18 @@ co\junwei\digitalsignature\Dsa.class
 co\junwei\bswabe\Bswabe$IntegerComparator.class
 co\junwei\scheme\bswabe.class
 co\junwei\scheme\bswabePrv.class
+co\junwei\bswabe\KeywordLinkedListBuilder.class
+co\junwei\bswabe\KeywordLinkedListUtil.class
 co\junwei\bswabe\BswabeCph.class
+co\junwei\bswabe\bswabetpd.class
+co\junwei\bswabe\bswabeprv2.class
 co\junwei\bswabe\Bswabe.class
 co\junwei\bswabe\BswabePolynomial.class
 co\junwei\cpabe\Cpabe.class
 co\junwei\bswabe\BswabePrv.class
 co\junwei\bswabe\SerializeUtils.class
+co\junwei\bswabe\bswabemsk2.class
+co\junwei\bswabe\SKE1.class
 co\junwei\bswabe\BswabeElementBoolean.class
 co\junwei\cpabe\Common.class
 co\junwei\scheme\bswabeCph.class

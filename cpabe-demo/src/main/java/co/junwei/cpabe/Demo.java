@@ -1,7 +1,13 @@
 package co.junwei.cpabe;
 
-import co.junwei.bswabe.Bswabe;
-import co.junwei.bswabe.BswabeMsk;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 import co.junwei.bswabe.*;
 import co.junwei.cpabe.policy.LangPolicy;
 
@@ -413,42 +419,79 @@ public class Demo {
 	static String w = "test";
 	public static void main(String[] args) throws Exception {
 		String attr_str;
+		HashMap<String, List<String>> documentSet = new HashMap<>();
+		documentSet.put("keyword1", List.of("doc1", "doc2", "doc3"));
+        documentSet.put("keyword2", List.of("doc4", "doc5", "doc6"));
+        documentSet.put("keyword3", List.of("doc7", "doc8", "doc9"));
+		String keyword="keyword3";
+		KeywordLinkedListBuilder builder = new KeywordLinkedListBuilder();
 		// attr = attr_kevin;
 		// attr = attr_sara;
 		// policy = policy_kevin_or_sara;
 		//attr_str = array2Str(attr);
+		String num ="2";
+		String attrpath = "C:\\Users\\mabhi\\OneDrive\\Desktop\\btp\\research\\cpabe-master 3\\cpabe-master\\demo\\cpabe\\attributes_file_"+num+".txt";
+		String attrlol = readFileToString(attrpath,false);
+		String policypath = "C:\\Users\\mabhi\\OneDrive\\Desktop\\btp\\research\\cpabe-master 3\\cpabe-master\\demo\\cpabe\\policies_file_"+num+".txt";
+		String policylol = readFileToString(attrpath,true).replace("\n", "\\n").replace("\r", "\\r");
+		System.out.println(policylol.replaceAll("\\n$", ""));
+		if (policylol != null && policylol.length() > 0) {
+            policylol= policylol.substring(0, policylol.length() - 1);
+        }
+		if (policylol != null && policylol.length() > 0) {
+            policylol= policylol.substring(0, policylol.length() - 1);
+        }
+		// policylol=policylol.trim()+" "+num+"1of"+num+"1";
+		// System.out.println(student_policy);
+		// System.out.println("a");;
+		// System.out.println(student_attr);
+		// System.out.println("b");
+		// System.out.println(policylol);
+		// System.out.println("a");
+		// System.out.println(attrlol);
+		// System.out.println("b");
+		// for (String attribute : testlol) {
+		// 	System.out.println(attribute);
+		// 	System.out.println("pp");
+		// }
 		BswabePub pub2 = new BswabePub();
 		bswabemsk2 msk2 = new bswabemsk2();
 		bswabeprv2 prv2;
 		bswabetpd tpd;
 		BswabeCph cph;
 		BswabeCphKey keyCph;
-		attr_str = student_attr;
-		policy = student_policy;
+		// attr_str = student_attr;
+		// policy = student_policy;
+		attr_str = attrlol;
+		policy = policylol;
 
 		Cpabe test = new Cpabe();
 		println("//start to setup");
-		test.setup(pubfile, mskfile);
+		// test.setup(pubfile, mskfile);
 		Bswabe.setup2(pub2, msk2);
 		println("//end to setup");
 
 		println("//start to keygen");
-		test.keygen(pubfile, prvfile, mskfile, attr_str);
+		// test.keygen(pubfile, prvfile, mskfile, attr_str);
 		String[] attr1 = LangPolicy.parseAttribute(attr_str);
 		prv2 = Bswabe.keygen2(pub2, msk2, attr1);
-		tpd = Bswabe.gentpd(prv2,pub2,w);
+		tpd = Bswabe.gentpd(prv2,pub2,keyword);
 		println("//end to keygen");
 
 		println("//start to enc");
 //		test.enc(pubfile, policy, inputfile, encfile);
-		keyCph = Bswabe.enc2(pub2, policy,w);
+		keyCph = Bswabe.enc2(pub2, policy,keyword,builder,documentSet);
 		cph=keyCph.cph;
 		println("//end to enc");
 
 		println("//start to dec");
-//		test.dec(pubfile, prvfile, encfile, decfile);
+//		test.dec(pubfile, prvfile, encfile, decfile);.
 		BswabeElementBoolean beb = Bswabe.dec2(pub2, prv2, cph,tpd);
+		byte[] newArray = Arrays.copyOfRange(beb.e.toBytes(), 0, 16);
+		List<String> decodedDocuments = builder.decodeLinkedList(newArray);
 		System.out.println(beb.e.toString());
+		System.out.println(beb.e.toBytes().length);
+		System.out.println(decodedDocuments);
 		println("//end to dec");
 	}
 
@@ -464,6 +507,39 @@ public class Demo {
 
 		return str;
 	}
+	public static String[] readAttributesFromFileSplit(String filePath) throws IOException {
+        List<String> attributes = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Split the line into individual attributes based on whitespace
+                String[] lineAttributes = line.split("\\s+");
+                attributes.addAll(Arrays.asList(lineAttributes));
+            }
+        }
+
+        // Convert the list of attributes to a String array
+        String[] attrArray = new String[attributes.size()];
+        attributes.toArray(attrArray);
+
+        return attrArray;
+    }
+	public static String readFileToString(String filePath,boolean flag) throws IOException {
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line);
+				if(flag)
+				content.append("\n");
+            }
+        }
+
+        return content.toString();
+    }
+
 
 	private static void println(Object o) {
 		if (DEBUG)
