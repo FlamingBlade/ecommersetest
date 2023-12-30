@@ -433,8 +433,8 @@ public class Demo {
 		String attrpath = "C:\\Users\\mabhi\\OneDrive\\Desktop\\btp\\research\\cpabe-master 3\\cpabe-master\\demo\\cpabe\\attributes_file_"+num+".txt";
 		String attrlol = readFileToString(attrpath,false);
 		String policypath = "C:\\Users\\mabhi\\OneDrive\\Desktop\\btp\\research\\cpabe-master 3\\cpabe-master\\demo\\cpabe\\policies_file_"+num+".txt";
-		String policylol = readFileToString(attrpath,true).replace("\n", "\\n").replace("\r", "\\r");
-		System.out.println(policylol.replaceAll("\\n$", ""));
+		String policylol = readFileToString(policypath,true).replace("\n", "\\n").replace("\r", "\\r");
+		// System.out.println(policylol.replaceAll("\\n$", ""));
 		if (policylol != null && policylol.length() > 0) {
             policylol= policylol.substring(0, policylol.length() - 1);
         }
@@ -442,13 +442,13 @@ public class Demo {
             policylol= policylol.substring(0, policylol.length() - 1);
         }
 		// policylol=policylol.trim()+" "+num+"1of"+num+"1";
-		// System.out.println(student_policy);
+		System.out.println(student_policy);
 		// System.out.println("a");;
-		// System.out.println(student_attr);
+		System.out.println(student_attr);
 		// System.out.println("b");
-		// System.out.println(policylol);
+		System.out.println(policylol);
 		// System.out.println("a");
-		// System.out.println(attrlol);
+		System.out.println(attrlol);
 		// System.out.println("b");
 		// for (String attribute : testlol) {
 		// 	System.out.println(attribute);
